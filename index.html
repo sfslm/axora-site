@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Akıllı Bariyer Sistemi - Türkiye'nin Yerli IoT Çözümü</title>
+<title>Axora - Akıllı Bariyer Sistemi | Türkiye'nin Yerli IoT Çözümü</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -19,6 +19,7 @@
   --green: #00D48A;
   --text:  #DDE2EE;
   --muted: #8B9AB8;
+  --whatsapp: #25D366;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -35,6 +36,238 @@ body{
 }
 
 /* ═══════════════════════════════
+   HEADER / NAVIGATION
+═══════════════════════════════ */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(8, 12, 20, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 18px 40px;
+  transition: all 0.3s ease;
+}
+
+.header.scrolled {
+  padding: 12px 40px;
+  background: rgba(8, 12, 20, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+/* A harfinin sol bacağı */
+.logo-icon::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  width: 3px;
+  height: 26px;
+  background: var(--dark);
+  transform-origin: bottom;
+  transform: rotate(15deg);
+  border-radius: 2px;
+}
+
+/* A harfinin sağ bacağı */
+.logo-icon::after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  width: 3px;
+  height: 26px;
+  background: var(--dark);
+  transform-origin: bottom;
+  transform: rotate(-15deg);
+  border-radius: 2px;
+}
+
+/* A harfinin üst çizgisi (bariyer - siyah) */
+.logo-icon-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  width: 14px;
+  height: 3px;
+  background: var(--dark);
+  border-radius: 2px;
+  z-index: 1;
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Hover: Orta çizgi sol kenardan yukarı açılıyor */
+.logo:hover .logo-icon-bar {
+  transform: translate(-50%, 10%) rotate(-75deg);
+}
+
+.logo:hover .logo-icon {
+  transform: scale(1.05);
+}
+
+.logo:hover .logo-icon {
+  transform: rotate(-5deg) scale(1.05);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  line-height: 0.9;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-tagline {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ═══════════════════════════════
+   WHATSAPP FLOATING BUTTON
+═══════════════════════════════ */
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+}
+
+.whatsapp-btn {
+  width: 64px;
+  height: 64px;
+  background: var(--whatsapp);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  animation: pulse 2s infinite;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-btn svg {
+  width: 36px;
+  height: 36px;
+  fill: white;
+}
+
+.whatsapp-tooltip {
+  position: absolute;
+  right: 75px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--dark3);
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-float:hover .whatsapp-tooltip {
+  opacity: 1;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(37, 211, 102, 0.7);
+  }
+}
+
+/* ═══════════════════════════════
    HERO
 ═══════════════════════════════ */
 .hero{
@@ -44,7 +277,7 @@ body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:100px 40px 80px;
+  padding:140px 40px 80px;
   overflow:hidden;
   background:
     radial-gradient(ellipse 80% 60% at 15% 40%, rgba(0,200,224,0.08) 0%, transparent 70%),
@@ -126,14 +359,19 @@ body{
   border:1px solid rgba(255,255,255,0.08);
   box-shadow:0 10px 40px rgba(0,0,0,0.3);
   animation:fadeUp .8s .3s ease both;
+  border-radius: 4px;
+  overflow: hidden;
 }
 .stat-item{
   padding:28px 42px;
   text-align:center;
   border-right:1px solid rgba(255,255,255,0.08);
-  transition:background .3s;
+  transition:background .3s, transform .3s;
 }
-.stat-item:hover{background:rgba(201,168,76,0.05);}
+.stat-item:hover{
+  background:rgba(201,168,76,0.05);
+  transform: translateY(-2px);
+}
 .stat-item:last-child{border-right:none;}
 .stat-num{
   font-family:'Bebas Neue',sans-serif;
@@ -225,6 +463,7 @@ body{
   overflow-x:auto;
   border:1px solid rgba(255,255,255,0.06);
   background:var(--dark2);
+  border-radius: 8px;
 }
 
 table{
@@ -368,7 +607,7 @@ td.opt-col{
 
 /* ═══════════════════════════════
    OPTIONAL FEATURES
-══════  ════════════════════════ */
+═══════════════════════════════ */
 .opt-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
@@ -381,6 +620,7 @@ td.opt-col{
   padding:34px 30px;
   position:relative;
   transition:border-color .3s,transform .3s,box-shadow .3s;
+  border-radius: 4px;
 }
 .opt-card:hover{
   border-color:rgba(201,168,76,0.5);
@@ -443,6 +683,7 @@ td.opt-col{
   position:relative;
   overflow:hidden;
   transition:transform .3s,box-shadow .3s;
+  border-radius: 4px;
 }
 .price-card:hover{
   transform:translateY(-6px);
@@ -540,6 +781,7 @@ td.opt-col{
   border-left:5px solid var(--red);
   padding:34px 38px;
   margin-top:56px;
+  border-radius: 4px;
 }
 .warn-title{
   font-family:'Bebas Neue',sans-serif;
@@ -612,6 +854,7 @@ td.opt-col{
   border-left:5px solid var(--cyan);
   padding:34px 38px;
   margin-top:56px;
+  border-radius: 4px;
 }
 .info-title{
   font-family:'Bebas Neue',sans-serif;
@@ -653,24 +896,105 @@ td.opt-col{
   margin-top:2px;
 }
 
-/* ════════════════   ══════════════
+/* ═══════════════════════════════
    FOOTER
 ═══════════════════════════════ */
 footer{
   background:var(--dark);
   border-top:1px solid rgba(255,255,255,0.06);
-  padding:50px 40px;
-  text-align:center;
+  padding:60px 40px 40px;
 }
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 40px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .footer-logo{
   font-family:'Bebas Neue',sans-serif;
-  font-size:34px;
+  font-size:42px;
   letter-spacing:6px;
-  color:var(--gold);
-  margin-bottom:14px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+
+.footer-desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 400px;
+}
+
+.footer-section h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--gold);
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.contact-item svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--gold);
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+
 .footer-note{
-  font-size:14px;
+  font-size:13px;
   color:var(--muted);
   font-weight:400;
   line-height:1.8;
@@ -684,7 +1008,33 @@ footer{
 
 /* RESPONSIVE */
 @media(max-width:768px){
-  .hero{padding:80px 24px 60px;}
+  .header {
+    padding: 14px 24px;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .logo-name {
+    font-size: 28px;
+  }
+  
+  .whatsapp-float {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .whatsapp-btn {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .whatsapp-tooltip {
+    display: none;
+  }
+  
+  .hero{padding:100px 24px 60px;}
   .hero-title{font-size:clamp(60px,12vw,80px);}
   .hero-sub{font-size:16px;margin:24px auto 48px;}
   .hero-stats{flex-direction:column;gap:0;}
@@ -703,10 +1053,47 @@ footer{
   .adv-grid{grid-template-columns:1fr;gap:16px;}
   .opt-grid{grid-template-columns:1fr;gap:16px;}
   .pricing-grid{grid-template-columns:1fr;gap:16px;}
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
 </style>
 </head>
 <body>
+
+<!-- ══ HEADER ══ -->
+<header class="header" id="header">
+  <div class="header-content">
+    <a href="#" class="logo">
+      <div class="logo-icon">
+        <div class="logo-icon-bar"></div>
+      </div>
+      <div class="logo-text">
+        <div class="logo-name">AXORA</div>
+        <div class="logo-tagline">Smart Barrier Systems</div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="#ozellikler">Özellikler</a>
+      <a href="#avantajlar">Avantajlar</a>
+      <a href="#karsilastirma">Karşılaştırma</a>
+      <a href="#iletisim">İletişim</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ══ WHATSAPP BUTTON ══ -->
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Hemen Bilgi Alın!</div>
+  <a href="https://wa.me/905373819955?text=Merhaba,%20Akıllı%20Bariyer%20Sistemi%20hakkında%20bilgi%20almak%20istiyorum." class="whatsapp-btn" target="_blank" rel="noopener">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 0C7.164 0 0 7.163 0 16c0 2.828.736 5.484 2.014 7.791L.069 30.617a1 1 0 0 0 1.314 1.314l6.826-1.945A15.92 15.92 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29c-2.655 0-5.193-.794-7.356-2.292l-.36-.25-5.233 1.49 1.49-5.233-.25-.36A12.936 12.936 0 0 1 3 16C3 8.82 8.82 3 16 3s13 5.82 13 13-5.82 13-13 13z"/>
+      <path d="M23.5 18.5c-.3-.15-1.8-.9-2.1-1-.3-.1-.5-.15-.7.15-.2.3-.8 1-.95 1.2-.15.2-.3.225-.6.075-.3-.15-1.275-.475-2.425-1.5-.9-.8-1.5-1.8-1.675-2.1-.175-.3-.02-.465.13-.615.135-.135.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.7-1.7-.95-2.325-.25-.625-.5-.55-.7-.55-.175 0-.375-.025-.575-.025s-.525.075-.8.375c-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.1 3.2 5.1 4.5.7.3 1.25.5 1.675.625.7.225 1.325.2 1.825.125.55-.1 1.8-.75 2.05-1.45.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/>
+    </svg>
+  </a>
+</div>
 
 <!-- ══ HERO ══ -->
 <section class="hero">
@@ -762,7 +1149,7 @@ footer{
 </div>
 
 <!-- ══ COMPARISON ══ -->
-<div style="background:var(--dark);">
+<div style="background:var(--dark);" id="karsilastirma">
 <div class="section">
   <div class="section-tag">Detaylı Karşılaştırma</div>
   <h2 class="section-heading">RAKIP<br><span style="color:var(--gold)">ANALİZİ</span></h2>
@@ -777,7 +1164,7 @@ footer{
     <thead>
       <tr>
         <th style="width:32%">ÖZELLİK</th>
-        <th class="our-col" style="width:22%">⭐ BİZİM SİSTEM</th>
+        <th class="our-col" style="width:22%">⭐ AXORA SİSTEM</th>
         <th style="width:18%">Çin Tabanlı Platform</th>
         <th style="width:18%">Hazır Akıllı Sistem</th>
       </tr>
@@ -1045,12 +1432,12 @@ footer{
 </div>
 
 <!-- ══ ADVANTAGES ══ -->
-<div class="adv-bg">
+<div class="adv-bg" id="avantajlar">
 <div class="adv-inner">
-  <div class="section-tag">Neden Biz?</div>
+  <div class="section-tag">Neden Axora?</div>
   <h2 class="section-heading">TEMEL<br><span style="color:var(--gold)">AVANTAJLAR</span></h2>
   <p class="section-desc">
-    Bizim sistemimizi diğerlerinden ayıran <strong>6 temel özellik.</strong>
+    Axora sistemini diğerlerinden ayıran <strong>6 temel özellik.</strong>
     Her biri gerçek kullanım senaryolarında test edilmiş ve kanıtlanmıştır.
   </p>
   <div class="adv-grid">
@@ -1127,7 +1514,7 @@ footer{
 </div>
 
 <!-- ══ OPTIONAL FEATURES ══ -->
-<div style="background:var(--dark);padding:110px 40px;">
+<div style="background:var(--dark);padding:110px 40px;" id="ozellikler">
 <div style="max-width:1200px;margin:0 auto;">
   <div class="section-tag">İsteğe Bağlı Geliştirmeler</div>
   <h2 class="section-heading">OPSİYONEL<br><span style="color:var(--gold)">ÖZELLİKLER</span></h2>
@@ -1196,3 +1583,92 @@ footer{
       <div class="opt-title">White Label Uygulama</div>
       <p class="opt-desc">
         Kendi markanızla, kendi logonuzla uygulama. Müşterilerinize <strong>sizin markanız altında</strong> sunun.
+        Google Play ve App Store'da yayınlama desteği dahil.
+      </p>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section" id="iletisim">
+  <h2 class="cta-title">HEMEN BAŞLAYIN</h2>
+  <p class="cta-sub">
+    Ücretsiz danışmanlık için bugün bizimle iletişime geçin.<br>
+    Projenize özel çözümler ve fiyat teklifimizi öğrenin.
+  </p>
+  <a href="https://wa.me/905373819955?text=Merhaba,%20Akıllı%20Bariyer%20Sistemi%20hakkında%20bilgi%20almak%20istiyorum." class="cta-btn" target="_blank" rel="noopener">
+    WhatsApp'tan İletişime Geç
+  </a>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="footer-logo">AXORA</div>
+      <p class="footer-desc">
+        Türkiye'nin yerli ve milli akıllı bariyer sistemi. Verileriniz güvende, 
+        kontrolünüz sizde. Sıfır lisans ücreti ile ömür boyu kullanım.
+      </p>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Hızlı Linkler</h4>
+      <ul class="footer-links">
+        <li><a href="#ozellikler">Özellikler</a></li>
+        <li><a href="#avantajlar">Avantajlar</a></li>
+        <li><a href="#karsilastirma">Karşılaştırma</a></li>
+        <li><a href="#iletisim">İletişim</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>İletişim</h4>
+      <div class="footer-contact">
+        <div class="contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="71181f171e3110091e03105f181f1a">[email&#160;protected]</a>
+        </div>
+        <div class="contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          +90 537 381 99 55
+        </div>
+        <div class="contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          İstanbul, Türkiye
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p class="footer-note">
+      © 2025 Axora Smart Systems. Tüm hakları saklıdır. | 
+      <a href="https://axora.ink" style="color:var(--gold);text-decoration:none;">axora.ink</a>
+    </p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Header scroll effect
+window.addEventListener('scroll', function() {
+  const header = document.getElementById('header');
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault
